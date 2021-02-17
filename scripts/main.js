@@ -1,22 +1,41 @@
-let dim = 64;
+let dim = 16;
+let squareDim = 500 / dim - 2;
 const container = document.getElementById('container');
-let squareDim = 600 / dim;
+const newBoard = document.getElementById('newBoard');
+const clear = document.getElementById('clear');
 
-for(let i = 0; i < dim; i++) {
-  for(let j = 0; j < dim; j++) {
-  const createDiv = document.createElement('div');
-  createDiv.classList.add('square');
-  container.appendChild(createDiv);
-  }   
-}
+createGrid(dim);
 
-const divs = document.querySelectorAll('div.square');
-divs.forEach((div) => {
+newBoard.addEventListener('click', (e) => {
+  const divs = document.querySelectorAll('div.square');
+  divs.forEach((div) => {
+    container.removeChild(div);
+  });
+  dim = prompt('Create new grid');
+  squareDim = 500 / dim - 2;
+  createGrid(dim); 
+});
+
+function createGrid(dimension) {
+  for(let i = 0; i < dimension; i++) {
+    for(let j = 0; j < dimension; j++) {
+    const createDiv = document.createElement('div');
+    createDiv.classList.add('square');
+    container.appendChild(createDiv);
+    }   
+  }
+
+  const divs = document.querySelectorAll('div.square');
+  divs.forEach((div) => {
     div.setAttribute('style', `width: ${squareDim}px; height: ${squareDim}px`);
-    div.addEventListener('mouseenter', function(e) {
+    div.addEventListener('mouseover', function(e) {
         div.setAttribute('style', `width: ${squareDim}px; height: ${squareDim}px; 
         background-color: red`);
     });
-});
-
+    clear.addEventListener('click', (e) => {
+      div.setAttribute('style', `width: ${squareDim}px; height: ${squareDim}px; 
+        background-color: white`);
+    })
+  });
+}
 
